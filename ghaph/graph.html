@@ -1,0 +1,170 @@
+<script type="text/javascript">
+class Graph {
+	constructor(){
+	    this.adj=new Map();
+	}
+
+   insertVertics(vertics){
+   	vertics.map((item)=>this.adj.set(item,[]));
+   }
+
+   insertEdges(from,to){
+   	this.adj.get(from).push(to);
+   	//this.adj.get(to).push(from);
+   }
+
+   printGraph(){
+   	for(var [key,value] of this.adj){
+   		console.log(key, '->' ,value);
+   	}
+   }
+
+   traverseGraph(node){
+
+   	let memberVertics= [];
+   	let visited=[];
+   	    visited[node]=true;
+   	    memberVertics.push(node);
+
+   	    while(memberVertics.length){
+
+   	    	let currentNode=memberVertics.pop();
+   	    	console.log(currentNode);
+
+   	    	let connectedVertices=this.adj.get(currentNode);
+
+   	    		for(let index=0;index<connectedVertices.length;index++){
+   	    			let neigh=connectedVertices[index];
+
+   	    			if(!visited[neigh]){
+   	    				visited[neigh]=true;
+   	    				memberVertics.push(neigh);
+                break;
+   	    			}
+
+   	    		}
+   	    	
+   	    }
+   }
+
+   findMinDistanceBetweenTwoVertices(source,destination){
+   	 		let visitedArr=[];
+   	 		visitedArr[destination]=false;
+   	 		this.traverseTreeFordistance(source,destination,visitedArr,0,0);
+   }
+   BFStraverseGraph = (startingVertex) => {    
+    let iteratorArr = [],
+        visited = [];
+
+    iteratorArr.push(startingVertex);  
+    
+
+    while(iteratorArr.length) {
+
+      let topVertex = iteratorArr.pop();
+
+      if(!visited[topVertex]) { 
+        console.log(topVertex); 
+        visited[topVertex] = true; 
+      }
+
+      let adjecentvertex = this.adj.get(topVertex);
+
+      while(adjecentvertex.length) {
+
+        let nextvertix= adjecentvertex.pop();
+
+        if(!visited[nextvertix]) {
+
+          visited[nextvertix] = true;
+          console.log(nextvertix);         
+          iteratorArr.push(nextvertix);
+
+        }
+
+      }
+
+    }
+   }
+
+  traverseTreeFordistance (source,destination,visitedArr,edgeCount,minEdge){
+  	visitedArr[source]=true;
+  	if(source==destination){
+  		if(edgeCount<minEdge) minEdge=edgeCount;
+  	}
+  	else {
+  		let sourceArr=this.adj.get(source);
+  		for(let index=0;index<=sourceArr.length;index++) {
+  			if(!visitedArr[sourceArr[index]]) {
+  				edgeCount++;
+  				this.traverseTreeFordistance(sourceArr[index],destination,visitedArr,edgeCount,minEdge);
+  			}
+  		}
+  	}
+  	visitedArr[source]=false;
+  	edgeCount--;
+  	console.log(edgeCount);
+  }
+
+  findpathForDirectedGraph = (source,destination) => {
+    let iteratorArr = [];    
+    let visited=[];
+
+    
+    iteratorArr.push(source);
+
+    while(iteratorArr.length) {
+      let topVertex = iteratorArr.pop();
+
+      if(!visited[topVertex]) {
+          visited[topVertex] = true;
+      }
+
+      if(topVertex == destination) {
+        console.log('path exists');
+        return;
+      }
+
+      let adjecentvertex = this.adj.get(topVertex);
+
+      adjecentvertex ? iteratorArr.push(adjecentvertex) : '';
+    }
+    console.log('no path exists');
+
+  }
+
+}
+
+
+
+
+	let vGraph=new Graph();
+	let arrToInsert=['A','B','C','D','E','F','G'];
+
+	vGraph.insertVertics(arrToInsert);
+
+	vGraph.insertEdges('A','B');
+	vGraph.insertEdges('B','C');
+	vGraph.insertEdges('C','D');
+	vGraph.insertEdges('D','E');
+	vGraph.insertEdges('E','F');
+	vGraph.insertEdges('G','G');
+	vGraph.insertEdges('A','D');
+	vGraph.insertEdges('D','G');
+
+	console.log('********* print graph *************');
+	vGraph.printGraph();
+
+	console.log('********* DFS traversal graph *************');
+	vGraph.traverseGraph('B');
+
+  console.log('********* BFS traversal graph *************');
+  vGraph.BFStraverseGraph('B');
+
+	console.log('********* find min edge  *************');
+	//vGraph.findMinDistanceBetweenTwoVertices('C','D');
+
+  console.log('********* find path for directed graph  *************');
+  vGraph.findpathForDirectedGraph('B','G');
+
+	</script>

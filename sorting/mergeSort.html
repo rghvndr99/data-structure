@@ -1,0 +1,47 @@
+  merge sort: it uses devide and conquer technique.
+  complexicity: o(n)
+
+Note: To see output, open console.
+
+
+<script>
+    const sort= (leftArr,rightArr)=> {   
+
+         let left = 0,
+         right = 0,
+         result =[];
+
+        while(left< leftArr.length && right< rightArr.length) {
+
+            if(leftArr[left] > rightArr[right] ) {
+                result.push(rightArr[right]);
+                right++;
+            }
+            else {
+                result.push(leftArr[left]);
+                left++;
+            }
+        }
+
+        return result.concat(leftArr.slice(left)).concat(rightArr.slice(right));
+    }
+
+    const mergeSort = (arr) =>{
+        if(arr.length == 1) return arr;
+
+        let mid = Math.floor(arr.length/2),
+            left = arr.slice(0,mid),
+            right = arr.slice(mid);
+
+
+        //iterate over left and right array
+        let leftArr = mergeSort(left);
+        let rightArr = mergeSort(right);
+
+        return sort(leftArr,rightArr);
+    }
+
+    const inputArr= [64,25,12,22,11];
+    const sortedArr = mergeSort(inputArr);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>

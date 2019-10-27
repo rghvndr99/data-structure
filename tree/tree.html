@@ -1,0 +1,348 @@
+<script type="text/javascript">
+class Node {
+	constructor (data=null,left=null,right=null){
+		this.data=data;
+		this.left=left;
+		this.right=right;
+	}
+}
+
+class BST {
+	constructor(){
+	    this.root=null;
+	}
+		
+
+	insertValue(value){
+		let newNode=this.root;
+		if(newNode===null){
+			this.root=new Node(value);
+			return null;
+		}else {
+			return this.searchTree(newNode,value);
+		}
+	}
+
+	max(){
+		let newNode=this.root;
+		if(newNode==null){
+			return null;
+		}
+		else {
+			while (newNode.right!==null){
+				newNode=newNode.right;
+			}
+		}
+		return newNode.data;
+	}
+
+	min= ()=> {
+		let newNode=this.root;
+		if(newNode==null){
+			return null;
+		}
+		else {
+			while (newNode.left!==null){
+				newNode=newNode.left;
+			}
+		}
+		console.log('recursiveMin: '+ this.recursiveMin());
+		console.log('iterative min: '+ newNode.data);
+	}
+	recursiveMin= (node = this.root) => {
+		if(node == null || node.left == null) {
+			return node.data;
+		}
+		return this.recursiveMin(node.left);
+	}
+	size= () => {
+		let node=this.root;
+		console.log('recursive height is ' + this.countTraverseTree(node));
+		console.log('iterative height is '+ this.countIterativeSize());
+	}
+
+	find(data){
+	let newNode=this.root;
+		while(newNode.data!==data){
+			if(newNode.data>data){
+				newNode=newNode.left;
+			}
+			else if(newNode.data<data){
+				newNode=newNode.right;
+			}
+		}
+	return newNode;
+    }
+    remove(value){
+    	this.root=this.removeTraverseTree(this.root,value);
+    	console.log(this.root);
+    }
+//*********** Tree traversal *************************//
+   preorder(root=this.root){
+   	if(root==null){
+   		return;
+   	}
+   	this.preorder(root.left);
+   	console.log(root.data);
+   	this.preorder(root.right);
+   }
+
+   postorder(root=this.root){
+   	if(root==null){
+   		return;
+   	}
+   	this.postorder(root.left);
+   	this.postorder(root.right);
+   	console.log(root.data);
+   }
+
+   inorder(root=this.root){
+   	if(root==null){
+   		return;
+   	}
+   	this.inorder(root.left);
+   	console.log(root.data);
+   	this.inorder(root.right);
+
+   }
+
+//*********** utility function *************************//
+    countTraverseTree(node){
+
+    	if(node == null) {
+    		return 0;
+    	}
+    	const leftHeight= this.countTraverseTree(node.left);
+    	const rightHeight= this.countTraverseTree(node.right);
+    	return (leftHeight+rightHeight+1);
+    }
+    countIterativeSize() {
+    	let count = 1;
+    	let stack = [];
+    	stack.push(this.root);
+
+    	while(stack.length >0 ) {
+    		let temp = stack.pop();
+
+	   		if(temp != null && temp.left != null) {
+    			stack.push(temp.left);
+    			count++;
+    		}
+    		if(temp != null &&  temp.right != null) {
+    			stack.push(temp.right);
+    			count++;
+    		}
+    	}
+    	return count;
+    }
+    makeMirrorTree(){
+    	console.log(this.mirroeTree(this.root));
+    }
+    mirroeTree(node){
+    	if(node==null){
+    		return node;
+    	}
+    	let left=this.mirroeTree(node.left);
+    	let right=this.mirroeTree(node.right);
+    	node.left=right;
+    	node.right=left;
+    	return node;
+    }
+
+    removeTraverseTree(node,data){
+    	//no node is there
+    	if(node===null){
+    		return null;
+    	}
+    	if(data==node.data){
+
+    	  //if left and  right both are null
+    	  if(node.left==null && node.right==null){
+    	  	return null;
+    	  }
+
+    	  //if no left children
+    	  if(node.left==null) {
+    	  	return node.right;
+    	  }
+
+    	  //if no right child
+    	  if(node.right==null){
+    	  	return node.left;
+    	  }
+
+    	  //if node has left and right children
+    	  let tempNode=node.right;
+    	  while(tempNode.left!==null){
+    	  	tempNode=tempNode.left;
+    	  }
+    	  node.data=tempNode.data;
+    	  node.right=this.removeTraverseTree(node.right,tempNode.data);
+    	  return node;
+    	}
+    	else if(data<node.data) {
+
+    		node.left=this.removeTraverseTree(node.left,data);
+    		return node;
+    	}
+    	else {
+          node.right=this.removeTraverseTree(node.right,data);
+    	  return node;
+    	}
+    }
+
+	//recursive binary search
+	searchTree=(rootNode,data)=>{
+	
+		//left insertion
+		if(data<rootNode.data) {
+			if(rootNode.left===null){
+				rootNode.left=new Node(data);
+				return;
+			}
+			else if (rootNode.left!==null){
+			    this.searchTree(rootNode.left,data);
+			}
+		}
+		//right insertion
+		else if(data>rootNode.data){
+			if(rootNode.right===null){
+				rootNode.right=new Node(data);
+				return;
+			}
+			else if (rootNode.right!==null){
+			    this.searchTree(rootNode.right,data);
+			}
+		}
+		else {
+			return null;
+		}
+
+	}
+
+	heightOfTree = (node = this.root) => {
+
+		if (node ==null ) {
+			return 0;
+		}
+		const leftHeight = this.heightOfTree(node.left);
+		const rightHeight = this.heightOfTree(node.right);
+		return Math.max(leftHeight,rightHeight)+1;
+
+	}
+
+	deletTree = (node = this.root) => {
+		if(node == null) {
+			return;
+		}
+
+		this.deletTree(node.left);
+		this.deletTree(node.right);
+		node = null;
+	} 
+
+	levelOrdertraversal = () => {
+		let stack = [];
+		let currentNode= this.root;
+
+		while(currentNode != null || stack.length > 0) {
+			while(currentNode != null ) {
+				stack.push(currentNode);
+				currentNode = currentNode.left;
+			}
+			currentNode = stack.pop();
+			console.log(currentNode.data);
+			currentNode = currentNode.right;
+		}
+	}
+	iterativeLeafCount = () => {
+		let stack = [],count = 0;
+		stack.push(this.root);
+
+		while(stack.length>0) {
+			let temp = stack.pop();
+
+			if(temp!= null && temp.left != null) {
+				stack.push(temp.left);
+			}
+			if(temp!= null && temp.right != null) {
+				stack.push(temp.right);
+			}
+			if(temp.left == null && temp.right == null) {
+				count++
+			}
+		}
+		console.log('iterative leaf count is '+count);
+	}
+	getrecursiveLeafCount = () => {
+		console.log('recursive leaf count is ',this.recursiveLeafCount(this.root,0));
+	}
+	recursiveLeafCount = (node = this.root, counter = 0 ) => {
+		if(node== null || (node.left == null && node.right == null) ){
+			return 0 ;
+		}
+		const leftLeafnode= this.recursiveLeafCount(node.left,counter);
+		const rightleafNode= this.recursiveLeafCount(node.right,counter);
+		return 1+leftLeafnode+rightleafNode;
+	}
+	recursiveLeftTree = (node = this.root,maxlevel=0,level=1) => {
+			if(node==null) return;
+
+			if(maxlevel<level){
+				console.log('recursive left tree : ',node.data);
+				maxlevel = level;
+			}
+		this.recursiveLeftTree(node.left,maxlevel,level+1);
+		this.recursiveLeftTree(node.right,maxlevel,level);
+	}
+	levelByLevelTravesal = () => {
+		let queue= [];
+		queue.push(this.root);
+
+		while(queue.length > 0 ) {
+			let temp = queue.shift();
+
+			if(temp) {
+				console.log('level by level traversal : ',temp.data);
+			}
+
+			if(temp.left) queue.push(temp.left);
+			if(temp.right) queue.push(temp.right);
+		}
+	}
+
+}
+	let vTree=new BST();
+	let arrToInsert=[12,10,30,20,40];
+	arrToInsert.map((item)=>vTree.insertValue(item));
+	//find method
+	//console.log(vTree.find(11));
+
+	//max method
+	//console.log('Max- ',vTree.max());
+
+	//min method
+	//vTree.min();
+
+	//remove element
+	//console.log('removed element',17,vTree.remove(17));
+
+	//size of tree
+	//vTree.size();
+
+	//preorder
+	//vTree.preorder();
+
+	//postorder
+	//vTree.postorder();
+
+	//vTree.makeMirrorTree();
+	//console.log(vTree.heightOfTree());
+	//vTree.deletTree();
+	vTree.levelOrdertraversal();
+	//vTree.iterativeLeafCount();
+	//vTree.getrecursiveLeafCount();
+	//vTree.recursiveLeftTree();
+	vTree.levelByLevelTravesal();
+
+</script>

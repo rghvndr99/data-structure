@@ -1,0 +1,25 @@
+  insertion sort: this sorting keep moving lower element in sorting array
+  complexicity: o(n)
+
+Note: To see output, open console.
+
+
+<script>
+    const insertionSort= (arr)=> {
+        for(let outerIndex=1; outerIndex<arr.length; outerIndex++) {
+            let indexElement = arr[outerIndex];
+            let j = outerIndex- 1; 
+            while(j>=0 && arr[j]> indexElement){
+                arr[j+1] = arr[j];
+                j--;                
+            }
+
+            arr[j+1]= indexElement;
+            console.log(arr);
+        }
+        return arr;
+    }
+    const inputArr= [64,25,12,22,11];
+    const sortedArr = insertionSort(inputArr);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>

@@ -1,0 +1,23 @@
+  Selection sort: it moves lowest item in left section in every loop/execution
+  complexicity: o(n^2)
+
+Note: To see output, open console.
+
+
+<script>
+    const selectionSort= (arr)=> {
+        for(let outerIndex=0; outerIndex<arr.length; outerIndex++) {
+            for( let innerIndex=outerIndex+1; innerIndex<arr.length;innerIndex++) {
+                if(arr[innerIndex]<arr[outerIndex]) {
+                    let temp = arr[outerIndex];
+                    arr[outerIndex] = arr[innerIndex];
+                    arr[innerIndex] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+    const inputArr= [64,25,12,22,11];
+    const sortedArr = selectionSort(inputArr);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>

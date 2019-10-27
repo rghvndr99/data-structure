@@ -1,0 +1,26 @@
+  bubble sort: it swaps adjecent element every execution. It executes one more time to check that input is sorted
+  complexicity: o(n^2)
+
+Note: To see output, open console.
+
+
+<script>
+    const bubbleSort= (arr)=> {
+        for(let outerIndex=0; outerIndex<arr.length; outerIndex++) {
+            let isSwapping= false;
+            for( let innerIndex=0; innerIndex< arr.length-1-outerIndex; innerIndex++) {
+                if(arr[innerIndex+1]<arr[ innerIndex ]) {
+                    let temp = arr[ innerIndex+1 ];
+                    arr[innerIndex+1] = arr[ innerIndex ];
+                    arr[innerIndex] = temp;
+                    isSwapping= true;
+                }
+            }
+            if(!isSwapping) break;
+        }
+        return arr;
+    }
+    const inputArr= [64,25,12,22,11];
+    const sortedArr = bubbleSort(inputArr);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>

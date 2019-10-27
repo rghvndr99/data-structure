@@ -1,0 +1,53 @@
+  merge sort: it uses devide and conquer technique.
+  complexicity: o(n)
+
+Note: To see output, open console.
+
+
+<script>
+    const partition= (arr,left,right)=> {   
+         let pivotIndex = Math.floor(left+right/2),
+             pivotElement = arr[pivotIndex],
+             leftpointer = left,
+             rightPointer = right;
+
+        while(leftpointer <= rightPointer) {
+            while(arr[leftpointer] < pivotElement ) {
+                leftpointer++;
+            }
+            while(arr[rightPointer]> pivotElement) {
+                rightPointer--;
+            }
+            if(leftpointer<= rightPointer) {
+                swap(arr,leftpointer,rightPointer);
+                leftpointer ++;
+                rightPointer --;
+            }
+             
+        }
+        return leftpointer;
+    }
+
+    const swap = (arr,i,j) => {
+        let temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+    }
+
+    const quickSort = (arr,left,right) =>{
+        if(arr.length == 1) return arr;
+
+        let index = partition(arr,left,right);
+        if((index-1) < left) {
+            quickSort(arr,left,index-1);
+        }
+        if(index< right) {
+            quickSort(arr,index,right);
+        }
+        return arr;
+    }
+
+    const inputArr= [64,25,12,22,11];
+    const sortedArr = quickSort(inputArr,0,inputArr.length-1);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>

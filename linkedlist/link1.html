@@ -1,0 +1,126 @@
+<script type="text/javascript">
+	class node {
+		constructor(ele) {
+			this.value=ele;
+            this.next=null;
+		}
+           
+	}
+	class linkedList {		
+		constructor() {
+			this.head=null;
+			this.count=0;
+		}
+
+		insertNode = (value) => {
+             let newNode= new node(value);
+             if(!this.head){
+                  this.head=newNode;
+             }else{
+             	let currentNode=this.head;
+                 while(currentNode.next){
+                 	currentNode=currentNode.next;
+                 }
+                 currentNode.next=newNode;
+             }
+		}
+		printReverseList = () => {
+			this.reverseList(this.head);			
+		}
+		reverseList = (node) => {
+			if(!node) return null;
+			this.reverseList(node.next);
+			console.log(node.value);
+		}
+		printList= ()=> {
+			let currentnode=this.head;
+			while(currentnode){
+				console.log(currentnode.value);
+				currentnode=currentnode.next;
+			}
+		this.lengthOfList();
+		}
+		searchEle= (ele) => {
+
+			console.log('recursive search :: value exists at ', this.recursiveSearch(ele,this.head,0));
+
+			let currentnode=this.head;
+			let counter=0;
+			if(!currentnode) {
+				console.log('link list is not defined');
+			}
+			else {
+				 while(currentnode.next) {
+                     counter++;
+                     if(currentnode.value == ele){
+                            console.log('value exists at '+counter);
+                            return;
+                     }
+                     currentnode=currentnode.next;
+				 }
+				 console.log('Not found');
+			}		 
+		}
+		recursiveSearch = (ele,node,counter) => {
+			if (!node) return 0;
+			if(node && node.data == ele) {
+				return counter;
+			}			
+			return this.recursiveSearch(ele,node.next,counter++);
+		}
+		lengthOfList= () => {
+			let currentnode=this.head,counter=0;
+			while(currentnode.next){
+				counter++;
+				currentnode=currentnode.next;
+			}
+			console.log('iterative length of list '+(counter+1));
+			console.log('recursive Length of list '+ this.recursiveLengthOfList());
+		}
+		recursiveLengthOfList= (node = this.head) => {
+			if (node == null ) {
+				return 0;
+			}
+			return 1+this.recursiveLengthOfList(node.next);
+		}
+		removeDuplicates = () => {
+			let currentNode= this.head,
+			    counter= 0;
+			while(currentNode.next) {
+				let temp = currentNode;
+				while(currentNode.value !== currentNode.next && currentNode.next.value) {
+					currentNode = currentNode.next;
+				}
+				currentNode.next = temp.next.next;				
+			}
+			this.printList();
+		}
+
+		middleElement= () => {
+			let currentnode = this.head;
+			let slowPointer=currentnode;
+			let fastPointer=currentnode;
+
+			while(fastPointer.next && fastPointer.next.next){
+				slowPointer=slowPointer.next;
+				fastPointer=fastPointer.next.next;
+			}
+			console.log('middle element is ',slowPointer.value);
+		}
+	}
+
+	let vlink=new linkedList();
+	vlink.insertNode(11);
+	vlink.insertNode(12);
+	vlink.insertNode(13);
+	vlink.insertNode(14);
+	vlink.insertNode(15);
+
+	//vlink.printList();
+	vlink.searchEle(14);
+	//vlink.searchEle(13);
+	vlink.lengthOfList();
+	//vlink.middleElement();
+	//vlink.printReverseList();
+	//vlink.removeDuplicates();
+</script>

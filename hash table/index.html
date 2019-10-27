@@ -1,0 +1,71 @@
+<script type="text/javascript">
+class HashTable {
+	constructor(size = 5) {
+		this.bucket = new Array(size);
+		this.size = size;
+	}
+
+	hashFun = (str) => {
+		return str.length % this.size;
+	}
+
+	insert = (key, value) => {
+		const index = this.hashFun(key);
+
+		if(!this.bucket[index]) this.bucket[index] = [];
+
+		this.bucket[index].push([key,value]);
+	}
+
+	search = (key) => {
+		const index = this.hashFun(key);
+
+		if(!this.bucket[index]) return 'not found';
+
+		if(this.bucket[index]) {
+			for(let bucketItem of this.bucket[index]) {
+
+				if(bucketItem[0] == key) return bucketItem;
+				break;
+			}
+
+		}
+	}
+
+	delete = (key) => {
+		const index = this.hashFun(key);
+
+		if(!this.bucket[index]) return 'no item to delete';
+
+		if(this.bucket[index]) {
+			for(let bucketIndex= 0; bucketIndex<= this.bucket[index].length; bucketIndex++) {
+
+				if(this.bucket[index][bucketIndex] && this.bucket[index][bucketIndex][0] == key) {
+					delete this.bucket[index][bucketIndex];
+					return this.bucket;
+					break;
+				}
+			}
+
+		}
+	}
+
+	printHashtable = () => this.bucket;
+}
+
+const hashTableObj = new HashTable();
+
+hashTableObj.insert('animl','elephant');
+hashTableObj.insert('anima','cow');
+hashTableObj.insert('man','Jay');
+hashTableObj.insert('bird','peageon');
+hashTableObj.insert('hm','iron');
+hashTableObj.insert('E','fan');
+
+console.log(hashTableObj.printHashtable());
+
+console.log(hashTableObj.search('man'));
+
+console.log(hashTableObj.delete('anima'));
+
+</script>

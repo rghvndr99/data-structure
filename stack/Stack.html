@@ -1,0 +1,42 @@
+<script type="text/javascript">
+	function Stack(){
+		let storage={};
+		let count=0
+
+		this.insertValue=function(value){
+             storage[count]=value;
+             count++;
+		}
+		this.delete=function(){
+			let returnVal=null
+			if(count){
+			   count--;
+               returnVal=storage[count];
+               delete storage[count];
+               
+			}
+			return returnVal;
+		}
+		this.peek=function (){
+           let returnVal=null
+			if(count){
+               returnVal=storage[count-1];      
+              }
+			return returnVal;
+	    }
+	    this.printStack=()=>storage;
+	}
+
+	let vstack=new Stack();
+	vstack.insertValue(12);
+	vstack.insertValue(13);
+	vstack.insertValue(14);
+	vstack.insertValue(15);
+
+	console.log(vstack.printStack());
+	console.log(vstack.delete());
+	console.log(vstack.printStack());
+	console.log(vstack.peek());
+	console.log(vstack.printStack());
+
+</script>
