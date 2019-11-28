@@ -65,11 +65,98 @@
             }
             return this.findRotationCount(arr,mid+1,high);
     	}
-    }
 
-    let inputArr = [1,2,3,4,5,6,7];
+        getRecursivereversedArr = (arr, pointer,end)=> {
+            if(pointer>=end) {
+                return;                
+            }
+            const temp = arr[pointer];
+            arr[pointer] = arr[end];
+            arr[end] = temp;
+            this.getRecursivereversedArr(arr,pointer+1,end-1);
+            return arr;
+        }
+
+        minMaxFromUnsortedArr = (arr) => {
+            let min = arr[0];
+            let max = arr[0];
+
+            for(let index = 1 ; index < arr.length; index++) {
+                if(arr[index] < min) min = arr[index];
+                if(arr[index] > max) max = arr[index];
+            }
+
+            console.log('min ', min, ' max ', max);
+        }
+		getDuplicateElement = (arr) => {
+			let hashTable = [];
+			let modifiedArr = [];
+			let length = arr.length;
+			let index = 0;
+
+			while(index<length) {
+				if(!hashTable[arr[index]]) {
+					hashTable[arr[index]] = true;
+					modifiedArr.push(arr[index]);					
+				}
+				index++;
+			}
+			return modifiedArr;
+		}
+		mergingTwoArray = (arr1,arr2) => {
+			let maxLength = arr1.length > arr2.length ? arr1.length : arr2.length;
+			let leftstart = 0;
+			let rightstart = 0;
+			let mergedArr = [];
+			let index = 0;
+
+			while(index < maxLength) {
+				if(arr1[leftstart] > arr2[rightstart]) {
+					mergedArr.push(arr2[rightstart]);
+					rightstart++;
+				}
+				else {
+					mergedArr.push(arr1[leftstart]);
+					leftstart++;
+				}				
+				index++;
+			}
+			while(leftstart<arr1.length) {
+					mergedArr.push(arr1[leftstart]);
+					leftstart++
+			}
+			while(rightstart<arr2.length) {
+					mergedArr.push(arr2[rightstart]);
+					rightstart++
+			}
+
+			return mergedArr;
+		}
+		moveSpecifiedElementAtLast= (arr, ele) => {
+			for(let index=0; index< arr.length;index++ ){
+				if(arr[index] == ele) {
+					for(let innerIndex =index; innerIndex<arr.length-1; innerIndex++ ) {
+						let temp = arr[innerIndex];						
+						arr[innerIndex] = arr[innerIndex+1];
+						arr[innerIndex+1] = temp;
+					}	
+					arr[arr.length-1] = ele;
+				}
+				
+			}
+			console.log(arr);
+		}
+}
+
+    let inputArr = [1,2,3,4,5,6,6,7,7,7,7];
 	let arraydatastructureObj =  new arraydatastructure();
-    arraydatastructureObj.getPairOfDesiredSum(inputArr, 10);
+    /*arraydatastructureObj.getPairOfDesiredSum(inputArr, 10);
 	arraydatastructureObj.rotateArr(inputArr, 2);
-	arraydatastructureObj.cycleRotateArr(inputArr, 3);    
+	arraydatastructureObj.cycleRotateArr(inputArr, 3); */
+
+    //console.log(arraydatastructureObj.getRecursivereversedArr(inputArr,0,6));
+    //arraydatastructureObj.minMaxFromUnsortedArr([13,10,26,5,3,30,8]); 
+	//console.log(arraydatastructureObj.getDuplicateElement(inputArr));
+	//console.log(arraydatastructureObj.mergingTwoArray([1,10,], [8,11,3,4,5,7]));
+	arraydatastructureObj.moveSpecifiedElementAtLast([1,2,2,2,2,1,3],2);
 </script>

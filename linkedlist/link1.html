@@ -25,13 +25,23 @@
              }
 		}
 		printReverseList = () => {
-			this.reverseList(this.head);			
+			this.reverseList(this.head);
+			this.reverseListIterative(this.head);			
 		}
 		reverseList = (node) => {
 			if(!node) return null;
 			this.reverseList(node.next);
 			console.log(node.value);
 		}
+		reverseListIterative = (node) => {
+			//using stack 
+			let queue =[];
+			while(node) {
+				queue.unshift(node.value);
+				node = node.next;
+			}
+			console.log('iterative reverse list', queue);
+		}		
 		printList= ()=> {
 			let currentnode=this.head;
 			while(currentnode){
@@ -107,6 +117,48 @@
 			}
 			console.log('middle element is ',slowPointer.value);
 		}
+		middleElementRecursive = (slowPointer = this.head,fastPointer = this.head) => {
+			if(fastPointer.next == null) {
+				console.log('middle element ::',slowPointer.value);
+				return;
+			}
+			this.middleElementRecursive(slowPointer.next,fastPointer.next.next);			
+		}
+		KthNodeFromLast = (k)=> {
+			let counter = 0;
+			let initialNode = this.head;
+			let refNode = this.head;
+
+			while(counter < k) {
+				refNode= refNode.next;
+				counter++;
+			}
+
+			while(refNode) {
+				refNode = refNode.next;
+				initialNode = initialNode.next;
+			}
+			console.log(k,'th node from last is', initialNode.value);
+		}
+		removeEveryKthNode = (k) => {
+			let counter = 0;
+			let prevNode = null;
+			let initialNode =  this.head;
+
+			while(initialNode) {
+				counter++
+				//nextNode = initialNode.next;
+				if(counter === k ) {
+					counter = 0;
+					prevNode.next = initialNode.next;
+				}
+				if (counter !== 0) {
+					prevNode = initialNode;
+				}
+				initialNode = prevNode.next;							
+			}
+			console.log(this.head);
+		}
 	}
 
 	let vlink=new linkedList();
@@ -117,10 +169,13 @@
 	vlink.insertNode(15);
 
 	//vlink.printList();
-	vlink.searchEle(14);
+	//vlink.searchEle(14);
 	//vlink.searchEle(13);
-	vlink.lengthOfList();
+	//vlink.lengthOfList();
 	//vlink.middleElement();
 	//vlink.printReverseList();
 	//vlink.removeDuplicates();
+	//vlink.middleElementRecursive();
+	//vlink.KthNodeFromLast(2);
+	vlink.removeEveryKthNode(2);
 </script>

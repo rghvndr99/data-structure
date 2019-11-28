@@ -1,0 +1,50 @@
+  Bucket sort:
+
+Note: To see output, open console.
+ALGO::
+ step1: Create buckets of size n
+ step2: Moove elements into bucket of same criteria
+ step3: sort indivisual buckets
+ step4: merge all the indivisual buckets
+
+<script>
+    const bucketeSort= (arr)=> {
+        let bucket = new Array(arr.length);
+        let resultantArr = [];
+
+        for(let index = 0; index < arr.length; index++ ) {
+            const BI_index =parseInt(arr[index]/arr.length);
+
+            if(!bucket[BI_index]) bucket[BI_index] = [];
+
+            bucket[BI_index].push(arr[index]);
+        }
+        
+        // sort all the indivisual buckets using any sorting algorithm (I am using bubble sort)
+        //and merge into resultant array
+        for(let bucketindex = 0; bucketindex< bucket.length; bucketindex++) {
+            if(!bucket[bucketindex]) continue;
+            resultantArr.push(sortUsingBubble(bucket[bucketindex]));
+        }
+        return resultantArr;
+    }
+
+    const sortUsingBubble = (arr)=> {
+        for(let outerIndex=0; outerIndex<arr.length; outerIndex++) {
+            let isSwapping= false;
+            for( let innerIndex=0; innerIndex< arr.length-1-outerIndex; innerIndex++) {
+                if(arr[innerIndex+1]<arr[ innerIndex ]) {
+                    let temp = arr[ innerIndex+1 ];
+                    arr[innerIndex+1] = arr[ innerIndex ];
+                    arr[innerIndex] = temp;
+                    isSwapping= true;
+                }
+            }
+            if(!isSwapping) break;
+        }
+        return arr;
+    }
+    const inputArr= [130,230,360,250,980,760];
+    const sortedArr = bucketeSort(inputArr);
+    console.log('input arr '+inputArr + ': sorted arr '+ sortedArr);
+</script>
